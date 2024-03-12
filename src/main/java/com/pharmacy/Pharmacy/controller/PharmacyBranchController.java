@@ -27,4 +27,9 @@ public class PharmacyBranchController {
         return pharmacyBranchService.createPharmacyBranch(pharmacyBranchDTO);
     }
 
+    @PutMapping("/pharmacyBranch/{id}")
+    public String updatePharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
+        return pharmacyBranchService.updatePharmacyBranch(pharmacyBranchDTO);
+    }
+
 }

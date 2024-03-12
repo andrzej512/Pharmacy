@@ -48,4 +48,21 @@ public class PharmacyBranchService {
             return "pharmacy name " + pharmacyBranch.getPharmacy().getName() + " does not exist !";
         } else return "pharmacy with given data already exists !";
     }
+
+    public String updatePharmacyBranch(PharmacyBranchDTO pharmacyBranchDTO) {
+
+        PharmacyBranch pharmacyBranch = pharmacyBranchMapper.mapPharmacyBranchToUpdate(pharmacyBranchDTO);
+        if (pharmacyBranch.getPharmacy().getId() == null) {
+            return "pharmacy name " + pharmacyBranch.getPharmacy().getName() + " does not exist !";
+        }
+        pharmacyBranchRepository.save(pharmacyBranch);
+        return "record has been updated !";
+
+    }
+
+    public Long getPharmacyBranchAddressId(Long pharmacyBranchId) {
+        Optional<PharmacyBranch> pharmacyBranch = pharmacyBranchRepository.findById(pharmacyBranchId);
+        return pharmacyBranch.map(n -> n.getPharmacyBranchAddress().getId()).orElse(null);
+
+    }
 }

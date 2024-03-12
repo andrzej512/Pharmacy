@@ -1,7 +1,11 @@
 package com.pharmacy.Pharmacy.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PharmacyBranchDTO {
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String pharmacyId;
     private String pharmacyCountry;
     private String pharmacyCity;
     private String pharmacyStreet;
@@ -38,4 +42,8 @@ public class PharmacyBranchDTO {
     public String getPharmacyName() {
         return pharmacyName;
     }
+
+    public String getPharmacyId() {return pharmacyId;}
+
+    public void setPharmacyId(String pharmacyId) {this.pharmacyId = pharmacyId;}
 }
