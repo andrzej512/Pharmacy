@@ -31,13 +31,13 @@ public abstract class PharmacyBranchMapper {
         return pharmacy;
     }
     @InheritConfiguration
-    @Mapping(source=  "pharmacyId", target = "id")
-    @Mapping(source=  "pharmacyId", target = "pharmacyBranchAddress.id",
-            qualifiedByName = "pharmacyIdToPharmacyBranchAddress_Id")
+    @Mapping(source=  "pharmacyBranchId", target = "id")
+    @Mapping(source=  "pharmacyBranchId", target = "pharmacyBranchAddress.id",
+            qualifiedByName = "pharmacyBranchIdToPharmacyBranchAddressId")
     public abstract PharmacyBranch mapPharmacyBranchToUpdate(PharmacyBranchDTO pharmacyBranchDTO);
 
-    @Named("pharmacyIdToPharmacyBranchAddress_Id")
-    public Long pharmacyIdToPharmacyBranchAddress_Id(Long id){
+    @Named("pharmacyBranchIdToPharmacyBranchAddressId")
+    public Long pharmacyBranchIdToPharmacyBranchAddressId(Long id){
         return pharmacyBranchService.getPharmacyBranchAddressId(id);
     }
 

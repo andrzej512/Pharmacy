@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PharmacyBranchDTO {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String pharmacyId;
+    private Long pharmacyBranchId;
     private String pharmacyCountry;
     private String pharmacyCity;
     private String pharmacyStreet;
@@ -43,7 +43,7 @@ public class PharmacyBranchDTO {
         return pharmacyName;
     }
 
-    public String getPharmacyId() {return pharmacyId;}
+    public Long getPharmacyBranchId() {return pharmacyBranchId;}
 
-    public void setPharmacyId(String pharmacyId) {this.pharmacyId = pharmacyId;}
+    public void setPharmacyBranchId(Long pharmacyBranchId) {this.pharmacyBranchId = pharmacyBranchId;}
 }
