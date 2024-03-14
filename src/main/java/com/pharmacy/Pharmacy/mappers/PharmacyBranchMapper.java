@@ -1,7 +1,6 @@
 package com.pharmacy.Pharmacy.mappers;
 
 import com.pharmacy.Pharmacy.dto.PharmacyBranchDTO;
-import com.pharmacy.Pharmacy.model.Pharmacy;
 import com.pharmacy.Pharmacy.model.PharmacyBranch;
 import com.pharmacy.Pharmacy.service.PharmacyBranchService;
 import com.pharmacy.Pharmacy.service.PharmacyService;
@@ -20,15 +19,13 @@ public abstract class PharmacyBranchMapper {
     @Mapping(source = "pharmacyCountry", target = "pharmacyBranchAddress.country")
     @Mapping(source = "pharmacyCity", target = "pharmacyBranchAddress.city")
     @Mapping(source = "pharmacyStreet", target = "pharmacyBranchAddress.street")
-    @Mapping(source=  "pharmacyName", target = "pharmacy",qualifiedByName = "pharmacyNameToPharmacy")
+    @Mapping(source=  "pharmacyName", target = "pharmacy.id",qualifiedByName = "pharmacyNameToPharmacyId")
+    @Mapping(source=  "pharmacyName", target = "pharmacy.name")
     public abstract PharmacyBranch mapPharmacyBranch(PharmacyBranchDTO pharmacyBranchDTO);
 
-    @Named("pharmacyNameToPharmacy")
-    public Pharmacy pharmacyNameToPharmacy(String pharmacyName){
-        Pharmacy pharmacy = new Pharmacy();
-        pharmacy.setId(pharmacyService.getPharmacyId(pharmacyName));
-        pharmacy.setName(pharmacyName);
-        return pharmacy;
+    @Named("pharmacyNameToPharmacyId")
+    public Long pharmacyNameToPharmacyId(String pharmacyName){
+        return pharmacyService.getPharmacyId(pharmacyName);
     }
     @InheritConfiguration
     @Mapping(source=  "pharmacyBranchId", target = "id")
