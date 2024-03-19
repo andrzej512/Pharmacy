@@ -12,19 +12,16 @@ public class PharmacyBranch {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="pharmacy_id")
+    @JoinColumn(name = "pharmacy_id")
     private Pharmacy pharmacy;
 
     @OneToOne(cascade= CascadeType.ALL)
     @JoinColumn(name="pharmacy_branch_address_id")
     private PharmacyBranchAddress pharmacyBranchAddress;
 
-
     public Long getId() {
         return id;
     }
-
-
 
     public Pharmacy getPharmacy() {
         return pharmacy;
@@ -33,9 +30,6 @@ public class PharmacyBranch {
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
 
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;

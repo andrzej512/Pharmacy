@@ -15,8 +15,9 @@ import java.util.List;
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
+
     @Autowired
-    public PharmacyController(PharmacyService pharmacyService){
+    public PharmacyController(PharmacyService pharmacyService) {
         this.pharmacyService = pharmacyService;
     }
 

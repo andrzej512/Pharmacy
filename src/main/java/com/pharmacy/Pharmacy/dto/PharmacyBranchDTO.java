@@ -43,7 +43,11 @@ public class PharmacyBranchDTO {
         return pharmacyName;
     }
 
-    public Long getPharmacyBranchId() {return pharmacyBranchId;}
+    public Long getPharmacyBranchId() {
+        return pharmacyBranchId;
+    }
 
-    public void setPharmacyBranchId(Long pharmacyBranchId) {this.pharmacyBranchId = pharmacyBranchId;}
+    public void setPharmacyBranchId(Long pharmacyBranchId) {
+        this.pharmacyBranchId = pharmacyBranchId;
+    }
 }

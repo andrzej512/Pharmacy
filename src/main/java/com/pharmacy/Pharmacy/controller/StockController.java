@@ -23,10 +23,7 @@ public class StockController {
                              @RequestParam(value = "medicine_id", required = false) Long medicineId) {
 
         return stockService.getStock(pharmacyBranchId, medicineId);
-
     }
-
-
 }
 
 

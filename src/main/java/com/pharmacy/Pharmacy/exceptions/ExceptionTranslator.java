@@ -18,5 +18,4 @@ public class ExceptionTranslator {
     public String badRequestHandler(BadRequestException exception) {
         return exception.getMessage();
     }
-
 }

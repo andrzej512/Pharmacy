@@ -2,17 +2,17 @@ package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
 
-@Entity(name="stock")
+@Entity(name = "stock")
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="stock_id")
+    @Column(name = "stock_id")
     private Long id;
     @ManyToOne
-    @JoinColumn(name="medicine_id")
+    @JoinColumn(name = "medicine_id")
     private Medicine medicineId;
     @ManyToOne()
-    @JoinColumn(name="pharmacy_branch_id")
+    @JoinColumn(name = "pharmacy_branch_id")
     private PharmacyBranch pharmacyBranchId;
     private Integer onStock;
 
@@ -31,5 +31,4 @@ public class Stock {
     public Integer getOnStock() {
         return onStock;
     }
-
 }

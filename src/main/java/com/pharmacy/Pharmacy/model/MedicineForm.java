@@ -5,5 +5,4 @@ public enum MedicineForm {
     LIQUID,
     TABLET,
     INJECTION
-
 }

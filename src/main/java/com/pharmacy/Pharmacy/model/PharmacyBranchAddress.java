@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity(name="pharmacy_branch_address")
+@Entity(name = "pharmacy_branch_address")
 public class PharmacyBranchAddress {
 
     @Id

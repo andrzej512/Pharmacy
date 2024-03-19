@@ -9,6 +9,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface StockDTOMapper {
     StockDTOMapper INSTANCE = Mappers.getMapper(StockDTOMapper.class);
-    @Mapping(source= "onStock", target = "availableOnStock")
+
+    @Mapping(source = "onStock", target = "availableOnStock")
     StockDTO mapToStockDTO(Stock stock);
 }

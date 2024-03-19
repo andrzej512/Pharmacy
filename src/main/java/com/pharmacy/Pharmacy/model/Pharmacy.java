@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Conditional;
 import java.util.List;
 import java.util.Objects;
 
-@Entity(name="pharmacies")
+@Entity(name = "pharmacies")
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="pharmacy_id")
+    @Column(name = "pharmacy_id")
     private Long id;
     @Column(unique = true)
     private String name;

@@ -19,23 +19,23 @@ public abstract class PharmacyBranchMapper {
     @Mapping(source = "pharmacyCountry", target = "pharmacyBranchAddress.country")
     @Mapping(source = "pharmacyCity", target = "pharmacyBranchAddress.city")
     @Mapping(source = "pharmacyStreet", target = "pharmacyBranchAddress.street")
-    @Mapping(source=  "pharmacyName", target = "pharmacy.id",qualifiedByName = "pharmacyNameToPharmacyId")
-    @Mapping(source=  "pharmacyName", target = "pharmacy.name")
+    @Mapping(source = "pharmacyName", target = "pharmacy.id", qualifiedByName = "pharmacyNameToPharmacyId")
+    @Mapping(source = "pharmacyName", target = "pharmacy.name")
     public abstract PharmacyBranch mapPharmacyBranch(PharmacyBranchDTO pharmacyBranchDTO);
 
     @Named("pharmacyNameToPharmacyId")
-    public Long pharmacyNameToPharmacyId(String pharmacyName){
+    public Long pharmacyNameToPharmacyId(String pharmacyName) {
         return pharmacyService.getPharmacyId(pharmacyName);
     }
+
     @InheritConfiguration
-    @Mapping(source=  "pharmacyBranchId", target = "id")
-    @Mapping(source=  "pharmacyBranchId", target = "pharmacyBranchAddress.id",
+    @Mapping(source = "pharmacyBranchId", target = "id")
+    @Mapping(source = "pharmacyBranchId", target = "pharmacyBranchAddress.id",
             qualifiedByName = "pharmacyBranchIdToPharmacyBranchAddressId")
     public abstract PharmacyBranch mapPharmacyBranchToUpdate(PharmacyBranchDTO pharmacyBranchDTO);
 
     @Named("pharmacyBranchIdToPharmacyBranchAddressId")
-    public Long pharmacyBranchIdToPharmacyBranchAddressId(Long id){
+    public Long pharmacyBranchIdToPharmacyBranchAddressId(Long id) {
         return pharmacyBranchService.getPharmacyBranchAddressId(id);
     }
-
 }

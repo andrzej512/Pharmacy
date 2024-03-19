@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class PharmacyBranchController {
@@ -23,7 +24,7 @@ public class PharmacyBranchController {
     }
 
     @PostMapping("/pharmacyBranch")
-    public String createPharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO){
+    public String createPharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
         return pharmacyBranchService.createPharmacyBranch(pharmacyBranchDTO);
     }
 
@@ -31,5 +32,4 @@ public class PharmacyBranchController {
     public String updatePharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
         return pharmacyBranchService.updatePharmacyBranch(pharmacyBranchDTO);
     }
-
 }
