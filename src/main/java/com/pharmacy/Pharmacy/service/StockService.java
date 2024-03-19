@@ -16,9 +16,8 @@ public class StockService {
         this.stockRepository = stockRepository;
     }
 
-    public StockDTO getStock(Long pharmacyBranchId, Long medicineId){
+    public StockDTO getStock(Long pharmacyBranchId, Long medicineId) {
 
-        return StockDTOMapper.INSTANCE.mapToStockDTO(stockRepository.findByPharmacyBranchId_IdAndMedicineId_Id(pharmacyBranchId,medicineId));
-
+        return StockDTOMapper.INSTANCE.mapToStockDTO(stockRepository.findByPharmacyBranchId_IdAndMedicineId_Id(pharmacyBranchId, medicineId));
     }
 }
