@@ -3,18 +3,14 @@ package com.pharmacy.Pharmacy.service;
 import com.pharmacy.Pharmacy.dto.StockDTO;
 import com.pharmacy.Pharmacy.mappers.StockDTOMapper;
 import com.pharmacy.Pharmacy.repository.StockRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class StockService {
 
     private final StockRepository stockRepository;
-
-    @Autowired
-    public StockService(StockRepository stockRepository) {
-        this.stockRepository = stockRepository;
-    }
 
     public StockDTO getStock(Long pharmacyBranchId, Long medicineId) {
 

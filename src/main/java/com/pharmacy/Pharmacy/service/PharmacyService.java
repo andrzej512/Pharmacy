@@ -3,20 +3,15 @@ package com.pharmacy.Pharmacy.service;
 import com.pharmacy.Pharmacy.exceptions.ResourceNotFoundException;
 import com.pharmacy.Pharmacy.model.Pharmacy;
 import com.pharmacy.Pharmacy.repository.PharmacyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @Service
 public class PharmacyService {
 
     private final PharmacyRepository pharmacyRepository;
-
-    @Autowired
-    public PharmacyService(PharmacyRepository pharmacyRepository) {
-        this.pharmacyRepository = pharmacyRepository;
-    }
 
     public List<Pharmacy> getPharmacies() {
         return pharmacyRepository.findAll();
