@@ -5,6 +5,11 @@ import lombok.Data;
 
 @Data
 @Entity(name = "stock")
+@NamedEntityGraph(
+        name = "Stock.withRelations",
+        attributeNodes = {
+                @NamedAttributeNode("medicineId"),
+                @NamedAttributeNode("pharmacyBranchId")})
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,6 +6,11 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @Entity(name = "pharmacy_branch")
+@NamedEntityGraph(
+        name = "PharmacyBranch.withRelations",
+        attributeNodes = {
+                @NamedAttributeNode("pharmacyBranchAddress"),
+                @NamedAttributeNode("pharmacy")})
 public class PharmacyBranch {
     @EqualsAndHashCode.Exclude
     @Id
