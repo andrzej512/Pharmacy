@@ -7,24 +7,20 @@ import com.pharmacy.Pharmacy.mappers.PharmacyBranchDTOMapper;
 import com.pharmacy.Pharmacy.mappers.PharmacyBranchMapper;
 import com.pharmacy.Pharmacy.model.*;
 import com.pharmacy.Pharmacy.repository.PharmacyBranchRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PharmacyBranchService {
 
     private final PharmacyBranchRepository pharmacyBranchRepository;
     @Autowired
     PharmacyBranchMapper pharmacyBranchMapper;
-
-    @Autowired
-    public PharmacyBranchService(PharmacyBranchRepository pharmacyBranchRepository) {
-        this.pharmacyBranchRepository = pharmacyBranchRepository;
-    }
 
     public List<PharmacyBranchDTO> getPharmacyBranch(List<String> countries) {
         List<PharmacyBranch> pharmacyBranches;

@@ -1,8 +1,15 @@
 package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity(name = "stock")
+@NamedEntityGraph(
+        name = "Stock.withRelations",
+        attributeNodes = {
+                @NamedAttributeNode("medicineId"),
+                @NamedAttributeNode("pharmacyBranchId")})
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,20 +22,4 @@ public class Stock {
     @JoinColumn(name = "pharmacy_branch_id")
     private PharmacyBranch pharmacyBranchId;
     private Integer onStock;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Medicine getMedicineId() {
-        return medicineId;
-    }
-
-    public PharmacyBranch getPharmacyAddressId() {
-        return pharmacyBranchId;
-    }
-
-    public Integer getOnStock() {
-        return onStock;
-    }
 }
