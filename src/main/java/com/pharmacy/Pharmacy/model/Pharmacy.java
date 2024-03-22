@@ -1,10 +1,12 @@
 package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Entity(name = "pharmacies")
+@Builder
 public class Pharmacy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 
 @Data
 @Entity(name = "pharmacy_branch_address")
+@Builder
 public class PharmacyBranchAddress {
 
     @EqualsAndHashCode.Exclude
