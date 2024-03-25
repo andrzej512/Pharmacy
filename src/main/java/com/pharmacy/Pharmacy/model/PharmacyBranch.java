@@ -1,13 +1,13 @@
 package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 @Data
 @Entity(name = "pharmacy_branch")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @NamedEntityGraph(
         name = "PharmacyBranch.withRelations",
         attributeNodes = {
