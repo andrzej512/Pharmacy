@@ -33,13 +33,10 @@ public class PharmacyServiceTests {
     PharmacyService pharmacyService;
     @InjectMocks
     PharmacyBranchService pharmacyBranchService;
-    @Spy
     List<Pharmacy> pharmacies = Arrays.asList(
             Pharmacy.builder().id(1L).name("PharmacyTest1").build(),
             Pharmacy.builder().id(2L).name("PharmacyTest2").build());
-    @Spy
     Pharmacy pharmacy = Pharmacy.builder().id(8L).name("PharmacyNameTest").build();
-    @Spy
     List<PharmacyBranch> pharmacyBranches = Arrays.asList(
             PharmacyBranch.builder()
                     .id(1L)
@@ -58,7 +55,6 @@ public class PharmacyServiceTests {
                             .street("testStreet2")
                             .country("testCountry2").build()).build());
 
-    @Spy
     PharmacyBranchDTO expectedPharmacyBranchDTO = PharmacyBranchDTO
             .builder()
             .pharmacyCountry(pharmacyBranches.get(0).getPharmacyBranchAddress().getCountry())
