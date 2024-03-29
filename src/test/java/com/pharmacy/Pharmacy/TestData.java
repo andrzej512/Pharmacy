@@ -12,8 +12,12 @@ public class TestData {
 
     List<Pharmacy> pharmacies = createPharmacies();
     List<PharmacyBranchAddress> pharmacyBranchAddresses = createPharmacyBranchAddresses();
+    List<PharmacyBranchAddress> UpdatedPharmacyBranchAddresses = createUpdatedPharmacyBranchAddresses();
     List<PharmacyBranch> pharmacyBranches = createPharmacyBranches();
-    PharmacyBranchDTO expectedPharmacyBranchDTO = createPharmacyBranchDTO();
+    PharmacyBranchDTO pharmacyBranchDTO = createPharmacyBranchDTO();
+    PharmacyBranchDTO pharmacyBranchDTOToUpdate = createPharmacyBranchDTOToUpdate();
+    PharmacyBranch expectedUpdatedPharmacyBranch = createExpectedPharmacyBranchToUpdate();
+    PharmacyBranchDTO pharmacyBranchDTOToCreate = createNewPharmacyBranchDTO();
 
     List<Pharmacy> createPharmacies() {
         return Arrays.asList(
@@ -25,6 +29,12 @@ public class TestData {
         return Arrays.asList(
                 PharmacyBranchAddress.builder().id(1L).city("testCity").street("testStreet").country("testCountry").build(),
                 PharmacyBranchAddress.builder().id(1L).city("testCity2").street("testStreet2").country("testCountry2").build());
+    }
+
+    List<PharmacyBranchAddress> createUpdatedPharmacyBranchAddresses() {
+        return Arrays.asList(
+                PharmacyBranchAddress.builder().id(1L).city("Updated City").street("Updated Street").country("Updated Country").build(),
+                PharmacyBranchAddress.builder().id(1L).city("Updated testCity2").street("Updated testStreet2").country("Updated testCountry2").build());
     }
 
     List<PharmacyBranch> createPharmacyBranches() {
@@ -47,6 +57,24 @@ public class TestData {
                 .pharmacyStreet(pharmacyBranches.get(0).getPharmacyBranchAddress().getStreet())
                 .pharmacyName(pharmacyBranches.get(0).getPharmacy().getName())
                 .build();
+    }
+
+    PharmacyBranchDTO createPharmacyBranchDTOToUpdate() {
+        return PharmacyBranchDTO
+                .builder()
+                .pharmacyBranchId(1L)
+                .pharmacyCountry("Updated Country")
+                .pharmacyCity("Updated City")
+                .pharmacyStreet("Updated Street")
+                .pharmacyName("PharmacyTest1")
+                .build();
+    }
+
+    PharmacyBranch createExpectedPharmacyBranchToUpdate() {
+        return PharmacyBranch.builder()
+                .id(1L)
+                .pharmacy(pharmacies.get(0))
+                .pharmacyBranchAddress(UpdatedPharmacyBranchAddresses.get(0)).build();
     }
     PharmacyBranchDTO createNewPharmacyBranchDTO(){
         return PharmacyBranchDTO
