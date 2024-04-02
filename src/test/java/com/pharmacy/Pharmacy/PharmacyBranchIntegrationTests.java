@@ -2,7 +2,9 @@ package com.pharmacy.Pharmacy;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pharmacy.Pharmacy.dto.PharmacyBranchDTO;
 import com.pharmacy.Pharmacy.model.Pharmacy;
+import com.pharmacy.Pharmacy.model.PharmacyBranch;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PharmacyIntegrationTest {
+public class PharmacyBranchIntegrationTests {
     @Autowired
     MockMvc mockMvc;
     @Autowired
@@ -32,16 +34,16 @@ public class PharmacyIntegrationTest {
 
     @Test
     public void myTest() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/pharmacies"))
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/pharmacyBranch"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andReturn();
 
-        List<Pharmacy> allPharmacies = objectMapper.readValue(
+        List<PharmacyBranchDTO> allPharmacyBranches = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
-                new TypeReference<List<Pharmacy>>() {
+                new TypeReference<List<PharmacyBranchDTO>>() {
                 });
 
-        assertEquals(testData.pharmacies, allPharmacies);
+        assertEquals(testData.createPharmacyBranchDTO(), allPharmacyBranches.get(0));
     }
 }
