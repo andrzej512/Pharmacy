@@ -1,10 +1,10 @@
 package com.pharmacy.Pharmacy;
 
 import com.pharmacy.Pharmacy.dto.PharmacyBranchDTO;
+import com.pharmacy.Pharmacy.exceptions.BadRequestException;
 import com.pharmacy.Pharmacy.exceptions.ResourceNotFoundException;
-import com.pharmacy.Pharmacy.model.Pharmacy;
+import com.pharmacy.Pharmacy.mappers.PharmacyBranchMapper;
 import com.pharmacy.Pharmacy.model.PharmacyBranch;
-import com.pharmacy.Pharmacy.model.PharmacyBranchAddress;
 import com.pharmacy.Pharmacy.repository.PharmacyBranchRepository;
 import com.pharmacy.Pharmacy.repository.PharmacyRepository;
 import com.pharmacy.Pharmacy.service.PharmacyBranchService;
@@ -12,19 +12,22 @@ import com.pharmacy.Pharmacy.service.PharmacyService;
 import org.junit.Test;
 import org.mockito.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 
 import org.junit.Before;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PharmacyServiceTests {
+    TestData testData = new TestData();
+    @Mock
+    PharmacyBranchMapper pharmacyBranchMapper;
     @Mock
     PharmacyRepository pharmacyRepository;
     @Mock
@@ -33,39 +36,6 @@ public class PharmacyServiceTests {
     PharmacyService pharmacyService;
     @InjectMocks
     PharmacyBranchService pharmacyBranchService;
-    @Spy
-    List<Pharmacy> pharmacies = Arrays.asList(
-            Pharmacy.builder().id(1L).name("PharmacyTest1").build(),
-            Pharmacy.builder().id(2L).name("PharmacyTest2").build());
-    @Spy
-    Pharmacy pharmacy = Pharmacy.builder().id(8L).name("PharmacyNameTest").build();
-    @Spy
-    List<PharmacyBranch> pharmacyBranches = Arrays.asList(
-            PharmacyBranch.builder()
-                    .id(1L)
-                    .pharmacy(pharmacies.get(0))
-                    .pharmacyBranchAddress(PharmacyBranchAddress.builder()
-                            .id(1L)
-                            .city("testCity")
-                            .street("testStreet")
-                            .country("testCountry").build()).build(),
-            PharmacyBranch.builder()
-                    .id(2L)
-                    .pharmacy(pharmacies.get(1))
-                    .pharmacyBranchAddress(PharmacyBranchAddress.builder()
-                            .id(2L)
-                            .city("testCity2")
-                            .street("testStreet2")
-                            .country("testCountry2").build()).build());
-
-    @Spy
-    PharmacyBranchDTO expectedPharmacyBranchDTO = PharmacyBranchDTO
-            .builder()
-            .pharmacyCountry(pharmacyBranches.get(0).getPharmacyBranchAddress().getCountry())
-            .pharmacyCity(pharmacyBranches.get(0).getPharmacyBranchAddress().getCity())
-            .pharmacyStreet(pharmacyBranches.get(0).getPharmacyBranchAddress().getStreet())
-            .pharmacyName(pharmacyBranches.get(0).getPharmacy().getName())
-            .build();
 
     @Before
     public void setup() {
@@ -73,23 +43,83 @@ public class PharmacyServiceTests {
     }
 
     @Test
-    public void testGetPharmacyId() {
+    public void shouldReturnCorrectPharmacyIdWhenPharmacyNameExists() {
+        //given
         given(pharmacyRepository.findOneByName("PharmacyNameTest"))
-                .willReturn(Optional.ofNullable(pharmacy));
-        assertThat(pharmacyService.getPharmacyId("PharmacyNameTest")).isEqualTo(8L);
-        assertThrows(ResourceNotFoundException.class, () -> pharmacyService.getPharmacyId("PharmacyNameNonExistingo"));
+                .willReturn(Optional.ofNullable(testData.pharmacies.get(0)));
+        //when
+        Long PharmacyId = pharmacyService.getPharmacyId("PharmacyNameTest");
+        //then
+        assertThat(PharmacyId).isEqualTo(1L);
     }
 
     @Test
-    public void testGetPharmaciesWhenPharmaciesExist() {
-        given(pharmacyRepository.findAll()).willReturn(pharmacies);
-        assertThat(pharmacyService.getPharmacies().size()).isEqualTo(2);
+    public void shouldThrowExceptionWhenPharmacyNameDoesNotExist() {
+        //given
+        given(pharmacyRepository.findOneByName("PharmacyNameTest"))
+                .willReturn(Optional.ofNullable(testData.pharmacies.get(0)));
+        //when
+        Exception exception = assertThrows(ResourceNotFoundException.class,
+                () -> pharmacyService.getPharmacyId("NonExistantPharmacy"));
+        //then
+        assertEquals("Pharmacy not found !", exception.getMessage());
     }
 
     @Test
-    public void testGetPharmacyBranchWhenCountriesNull() {
-        given(pharmacyBranchRepository.findAll()).willReturn(pharmacyBranches);
-        assertThat(pharmacyBranchService.getPharmacyBranch(null).size()).isEqualTo(2);
-        assertThat(pharmacyBranchService.getPharmacyBranch(null).get(0)).isEqualTo(expectedPharmacyBranchDTO);
+    public void shouldReturnPharmacyBranchDTOWhenCountryNotProvided() {
+        //given
+        given(pharmacyBranchRepository.findAll()).willReturn(testData.pharmacyBranches);
+        //when
+        PharmacyBranchDTO pharmacyBranchDTO = pharmacyBranchService.getPharmacyBranch(null).get(0);
+        //then
+        assertThat(pharmacyBranchDTO).isEqualTo(testData.pharmacyBranchDTO);
     }
+
+    @Test
+    public void shouldCreatePharmacyBranchWhenProvidedDataIsCorrect() {
+        //given
+        given(pharmacyBranchRepository.findAll()).willReturn(testData.pharmacyBranches);
+        //when
+        String message = pharmacyBranchService.createPharmacyBranch(testData.pharmacyBranchDTOToCreate);
+        //then
+        assertEquals("pharmacy created !", message);
+    }
+
+    @Test
+    public void shouldNotCreateNewPharmacyBranchWhenPharmacyBranchAlreadyExists() {
+        //given
+        given(pharmacyBranchRepository.findAll()).willReturn(testData.pharmacyBranches);
+        given(pharmacyBranchMapper.mapPharmacyBranch(any())).willReturn(testData.pharmacyBranches.get(0));
+        //when
+        Exception exception = assertThrows(BadRequestException.class,
+                () -> pharmacyBranchService.createPharmacyBranch(testData.pharmacyBranchDTO));
+        //then
+        assertEquals("provided data already exists in db !", exception.getMessage());
+    }
+
+    @Test
+    public void shouldUpdatePharmacyBranchWhenPharmacyBranchDtoIsCorrect() {
+        //given
+        PharmacyBranch testedBranch = testData.pharmacyBranches.get(0);
+        given(pharmacyBranchRepository.findById(any())).willReturn(Optional.ofNullable(testedBranch));
+        given(pharmacyBranchMapper.mapPharmacyBranchToUpdate(any())).willReturn(testData.expectedUpdatedPharmacyBranch);
+        //when
+        String result = pharmacyBranchService.updatePharmacyBranch(testData.pharmacyBranchDTOToUpdate);
+        //then
+        assertEquals("record has been updated !", result);
+    }
+
+    @Test
+    public void shouldNotUpdaePharmacyBranchWhenPharmacyBranchAlreadyExists() {
+        //given
+        PharmacyBranch testedBranch = testData.pharmacyBranches.get(0);
+        given(pharmacyBranchRepository.findById(any())).willReturn(Optional.ofNullable(testedBranch));
+        given(pharmacyBranchMapper.mapPharmacyBranchToUpdate(any())).willReturn(testedBranch);
+        //when
+        Exception exception = assertThrows(BadRequestException.class,
+                () -> pharmacyBranchService.updatePharmacyBranch(testData.pharmacyBranchDTO));
+        //then
+        assertEquals("provided data already exists in db !", exception.getMessage());
+    }
+
 }

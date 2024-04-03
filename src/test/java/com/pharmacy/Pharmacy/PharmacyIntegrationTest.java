@@ -31,17 +31,19 @@ public class PharmacyIntegrationTest {
     TestData testData;
 
     @Test
-    public void myTest() throws Exception {
+    public void shouldReturnAllPharmacies() throws Exception {
+        //given
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/pharmacies"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andReturn();
-
+        //when
         List<Pharmacy> allPharmacies = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<List<Pharmacy>>() {
                 });
-
+        //then
         assertEquals(testData.pharmacies, allPharmacies);
+        assertEquals(2, allPharmacies.size());
     }
 }

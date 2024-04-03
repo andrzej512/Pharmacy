@@ -3,8 +3,6 @@ package com.pharmacy.Pharmacy;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pharmacy.Pharmacy.dto.PharmacyBranchDTO;
-import com.pharmacy.Pharmacy.model.Pharmacy;
-import com.pharmacy.Pharmacy.model.PharmacyBranch;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,17 +31,18 @@ public class PharmacyBranchIntegrationTests {
     TestData testData;
 
     @Test
-    public void myTest() throws Exception {
+    public void shouldReturnAllPharmacyBranches() throws Exception {
+        //given
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/pharmacyBranch"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andReturn();
-
+        //when
         List<PharmacyBranchDTO> allPharmacyBranches = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<List<PharmacyBranchDTO>>() {
                 });
-
+        //then
         assertEquals(testData.createPharmacyBranchDTO(), allPharmacyBranches.get(0));
     }
 }
