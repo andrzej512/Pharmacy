@@ -19,13 +19,12 @@ import java.util.List;
 public class PharmacyBranchService {
 
     private final PharmacyBranchRepository pharmacyBranchRepository;
-    @Autowired
-    PharmacyBranchMapper pharmacyBranchMapper;
+    private final PharmacyBranchMapper pharmacyBranchMapper;
 
     public List<PharmacyBranchDTO> getPharmacyBranch(List<String> countries) {
         List<PharmacyBranch> pharmacyBranches;
         List<PharmacyBranchDTO> pharmacyAddressesDTO = new ArrayList<>();
-        if (countries == null) {
+        if (countries == null || countries.size() == 0) {
             pharmacyBranches = pharmacyBranchRepository.findAll();
         } else pharmacyBranches = pharmacyBranchRepository.findAllByPharmacyBranchAddress_CountryIn(countries);
 
