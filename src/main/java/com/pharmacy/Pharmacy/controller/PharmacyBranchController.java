@@ -13,17 +13,17 @@ public class PharmacyBranchController {
 
     private final PharmacyBranchService pharmacyBranchService;
 
-    @GetMapping("/pharmacyBranch")
+    @GetMapping("/pharmacy-branch")
     public List<PharmacyBranchDTO> getPharmacies(@RequestParam(value = "country", required = false) List<String> countries) {
         return pharmacyBranchService.getPharmacyBranch(countries);
     }
 
-    @PostMapping("/pharmacyBranch")
+    @PostMapping("/pharmacy-branch")
     public String createPharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
         return pharmacyBranchService.createPharmacyBranch(pharmacyBranchDTO);
     }
 
-    @PutMapping("/pharmacyBranch/{id}")
+    @PutMapping("/pharmacy-branch/{id}")
     public String updatePharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
         return pharmacyBranchService.updatePharmacyBranch(pharmacyBranchDTO);
     }
