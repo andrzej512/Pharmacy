@@ -25,7 +25,7 @@ public class KafkaProducer {
 
         Message<PharmacyBranchDTO> message = MessageBuilder
                 .withPayload(harmacyBranchDTO)
-                .setHeader(KafkaHeaders.TOPIC, "javaguides")
+                .setHeader(KafkaHeaders.TOPIC, "createPharmacyTopic")
                 .build();
 
         kafkaTemplate.send(message);
