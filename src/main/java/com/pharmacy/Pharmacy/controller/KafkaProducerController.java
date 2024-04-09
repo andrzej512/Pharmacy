@@ -16,20 +16,10 @@ public class KafkaProducerController {
         this.kafkaProducer = kafkaProducer;
     }
 
-    @PostMapping("/publish")
-    public ResponseEntity<String> publish(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
-        kafkaProducer.sendMessage(pharmacyBranchDTO);
-        return ResponseEntity.ok("Message sent to kafka topic");
-    }
     @PostMapping("/pharmacy-branch")
     public ResponseEntity<String> createPharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
         kafkaProducer.sendMessage(pharmacyBranchDTO);
         return ResponseEntity.ok("MSG for Post sent to kafka topic");
     }
 
-    @PutMapping("/pharmacy-branch/{id}")
-    public ResponseEntity<String> updatePharmacyBranch(@RequestBody PharmacyBranchDTO pharmacyBranchDTO) {
-        kafkaProducer.sendMessage(pharmacyBranchDTO);
-        return ResponseEntity.ok("MSG for Update sent to kafka topic");
-    }
 }
