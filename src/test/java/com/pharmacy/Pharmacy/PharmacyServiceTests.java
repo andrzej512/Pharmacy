@@ -18,6 +18,7 @@ import static org.mockito.BDDMockito.*;
 
 import org.junit.Before;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 

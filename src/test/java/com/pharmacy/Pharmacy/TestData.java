@@ -4,9 +4,11 @@ import com.pharmacy.Pharmacy.dto.PharmacyBranchDTO;
 import com.pharmacy.Pharmacy.model.Pharmacy;
 import com.pharmacy.Pharmacy.model.PharmacyBranch;
 import com.pharmacy.Pharmacy.model.PharmacyBranchAddress;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
+@Component
 
 public class TestData {
 
