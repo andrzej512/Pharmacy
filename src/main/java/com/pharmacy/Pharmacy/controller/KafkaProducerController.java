@@ -21,5 +21,4 @@ public class KafkaProducerController {
         kafkaProducer.sendMessage(pharmacyBranchDTO);
         return ResponseEntity.ok("MSG for Post sent to kafka topic");
     }
-
 }
