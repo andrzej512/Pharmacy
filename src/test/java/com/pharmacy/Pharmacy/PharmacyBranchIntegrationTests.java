@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -44,5 +45,50 @@ public class PharmacyBranchIntegrationTests {
                 });
         //then
         assertEquals(testData.createPharmacyBranchDTO(), allPharmacyBranches.get(0));
+    }
+
+    @Test
+    public void shouldReturnErrorMsgWhenPharmacyNotFound() throws Exception {
+        String incorrectJson = "    {\n" +
+                "        \"pharmacyCountry\": \"Poland\",\n" +
+                "        \"pharmacyCity\": \"Krakow\",\n" +
+                "        \"pharmacyStreet\": \"Hugona\",\n" +
+                "        \"pharmacyName\": \"New Pharmacy\"\n" +
+                "    }";
+        //given
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/pharmacyBranch")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(incorrectJson))
+                        .andDo(MockMvcResultHandlers.print())
+                        .andExpect(MockMvcResultMatchers.status().is(404))
+                        .andReturn();
+        //when
+        String errorMSG = mvcResult.getResponse().getContentAsString();
+
+        //then
+        assertEquals("Pharmacy not found !", errorMSG);
+    }
+    @Test
+    public void givenCorrectJsonWhenPostForPharmacyBranchIsCalledThenPharmacyIsCreated() throws Exception {
+        String correctJson = "    {\n" +
+                "        \"pharmacyCountry\": \"Poland\",\n" +
+                "        \"pharmacyCity\": \"Krakow\",\n" +
+                "        \"pharmacyStreet\": \"Hugona\",\n" +
+                "        \"pharmacyName\": \"PharmacyTest1\"\n" +
+                "    }";
+        //given
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/api/v1/pharmacyBranch")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(correctJson))
+                        .andDo(MockMvcResultHandlers.print())
+                        .andExpect(MockMvcResultMatchers.status().is(200))
+                        .andReturn();
+        //when
+        String pharmacyCreatedMSG = mvcResult.getResponse().getContentAsString();
+
+        //then
+        assertEquals("pharmacy created !", pharmacyCreatedMSG);
     }
 }
