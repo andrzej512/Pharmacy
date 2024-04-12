@@ -19,6 +19,9 @@
 		<mockito.version>5.11.0</mockito.version>
 		<junit.version>4.13.2</junit.version>
 		<assertj.version>3.25.3</assertj.version>
+		<flyway.user>postgres</flyway.user>
+		<flyway.password>admin</flyway.password>
+		<flyway.schemas>public</flyway.schemas>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -69,6 +72,11 @@
 			<version>${assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-maven-plugin</artifactId>
+			<version>9.22.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -92,6 +100,17 @@
 							<version>${org.mapstruct.version}</version>
 						</path>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>9.22.3</version>
+				<configuration>
+					<url>jdbc:postgresql://localhost:5433/postgres</url>
+					<user>postgres</user>
+					<password>admin</password>
+					<cleanDisabled>false</cleanDisabled>
 				</configuration>
 			</plugin>
 		</plugins>
