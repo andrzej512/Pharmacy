@@ -2,7 +2,7 @@ package com.pharmacy.Pharmacy.model;
 
 import jakarta.persistence.*;
 
-@Entity(name = "medicines")
+@Entity(name = "medicine")
 public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

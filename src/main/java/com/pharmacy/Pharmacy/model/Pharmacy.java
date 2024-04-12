@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name = "pharmacies")
+@Entity(name = "pharmacy")
 
 public class Pharmacy {
     @EqualsAndHashCode.Exclude
